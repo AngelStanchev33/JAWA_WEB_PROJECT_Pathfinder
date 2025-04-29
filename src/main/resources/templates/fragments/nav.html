@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div th:fragment="nav">
+    <nav class="main-nav">
+<!--                <p>ID: <span th:text="${@currentUser.id}">null</span></p>-->
+<!--                <p>LOGGED: <span th:text="${@currentUser.logged}">null</span></p>-->
+        <ul>
+            <th:block th:if="${@currentUser.isLogged()}">
+                <li>
+                    <a href="/static">Add new route</a>
+                </li>
+                <li>
+                    <a th:href="@{/users/profile/{id}(id=${@currentUser.id})}">Profile</a>
+                </li>
+                <li>
+                    <a th:if="${@currentUser.isAdmin()}" href="/static">Admin</a>
+                </li>
+                <li>
+                    <form th:action="@{/users/logout}" method="post">
+                        <button type="submit" class="main-nav-link">Logout</button>
+                    </form>
+                </li>
+            </th:block>
+            <th:block th:if="${!@currentUser.isLogged()}">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/users/login">Login</a>
+                </li>
+                <li>
+                    <a href="/users/register">Register</a>
+                </li>
+                <li>
+                    <a href="/static">About</a>
+                </li>
+            </th:block>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>
