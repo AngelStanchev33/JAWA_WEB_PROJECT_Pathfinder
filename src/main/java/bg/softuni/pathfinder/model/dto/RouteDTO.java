@@ -2,8 +2,8 @@ package bg.softuni.pathfinder.model.dto;
 
 import java.util.List;
 
+import bg.softuni.pathfinder.model.entity.CommentEntity;
 import bg.softuni.pathfinder.model.entity.PictureEntity;
-import bg.softuni.pathfinder.model.entity.UserEntity;
 import io.jenetics.jpx.WayPoint;
 
 public class RouteDTO {
@@ -11,15 +11,25 @@ public class RouteDTO {
     private String gpxCoordinates;
     private String level;
     private String name;
-    private UserEntity author;
+    private String author;
     private String description;
     private String videoUrl;
     private List<PictureEntity> pictures;
     private Double distance;
     private WayPoint start;
     private WayPoint end;
+    private List<CommentEntity> comments;
+
 
      // getters & setters
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
+
     public WayPoint getStart() {
         return start;
     }
@@ -70,10 +80,10 @@ public class RouteDTO {
     }
 
     public String getAuthor() {
-        return author.getUsername();
+        return author;
     }
 
-    public void setAuthor(UserEntity author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 

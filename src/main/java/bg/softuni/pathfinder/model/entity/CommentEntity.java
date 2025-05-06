@@ -1,6 +1,7 @@
 package bg.softuni.pathfinder.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ public class CommentEntity extends BaseEntity{
     private String textContent;
 
     @ManyToOne
+    @NotNull
     private UserEntity author;
 
     @ManyToOne

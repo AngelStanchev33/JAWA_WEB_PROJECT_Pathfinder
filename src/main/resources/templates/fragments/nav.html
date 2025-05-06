@@ -16,7 +16,7 @@
         <ul>
             <th:block th:if="${@currentUser.isLogged()}">
                 <li>
-                    <a href="/static">Add new route</a>
+                    <a href="/routes/addRoute">Add new route</a>
                 </li>
                 <li>
                     <a th:href="@{/users/profile/{id}(id=${@currentUser.id})}">Profile</a>

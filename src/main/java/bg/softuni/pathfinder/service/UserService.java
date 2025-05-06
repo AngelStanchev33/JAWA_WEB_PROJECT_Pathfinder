@@ -58,6 +58,7 @@ public class UserService {
         currentUser.setId(user.getId());
         currentUser.setFullName(user.getFullName());
         currentUser.setLogged(true);
+        currentUser.setUsername(user.getUsername());
         if (isAdmin(user)) {
             currentUser.setAdmin(true);
         }

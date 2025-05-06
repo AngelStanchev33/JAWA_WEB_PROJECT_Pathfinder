@@ -31,7 +31,7 @@
                 <h2 th:text="${route.name}">Your Route</h2>
                 <p th:text="${route.description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae alias reiciendis deleniti possimus
                 </p>
-                <a th:href="@{/routes/details/{id}(id=${route.id})}" class="btn">Learn More</a>
+                <a th:href="@{/routes/{id}(id=${route.id})}" class="btn">Learn More</a>
             </div>
         </section>
     </div>

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
 @Table(name = "routes")
 public class RouteEntity extends BaseEntity {
@@ -34,12 +36,24 @@ public class RouteEntity extends BaseEntity {
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PictureEntity> pictures;
 
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CommentEntity> comments;
+    
 
     public RouteEntity() {
         this.pictures = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
     //getters & setters
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
+
     public String getGpxCoordinates() {
         return gpxCoordinates;
     }
@@ -94,5 +108,13 @@ public class RouteEntity extends BaseEntity {
 
     public void setPictures(List<PictureEntity> pictures) {
         this.pictures = pictures;
+    }
+
+    public List<CategoryEntities> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryEntities> categories) {
+        this.categories = categories;
     }
 }

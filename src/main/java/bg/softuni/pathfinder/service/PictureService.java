@@ -2,7 +2,7 @@ package bg.softuni.pathfinder.service;
 
 import bg.softuni.pathfinder.model.dto.PIcturesDTO;
 import bg.softuni.pathfinder.model.entity.PictureEntity;
-import bg.softuni.pathfinder.reposityory.PicturesRepo;
+import bg.softuni.pathfinder.reposityory.PictureRepo;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 public class PictureService {
 
     private final ModelMapper modelMapper;
-    private final PicturesRepo pictureRepo;
+    private final PictureRepo pictureRepo;
 
-    public PictureService(ModelMapper modelMapper, PicturesRepo pictureRepo) {
+    public PictureService(ModelMapper modelMapper, PictureRepo pictureRepo) {
         this.modelMapper = modelMapper;
         this.pictureRepo = pictureRepo;
     }
