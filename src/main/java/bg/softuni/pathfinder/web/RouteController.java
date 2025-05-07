@@ -11,9 +11,12 @@ import bg.softuni.pathfinder.reposityory.PictureRepo;
 import bg.softuni.pathfinder.reposityory.RouteRepo;
 import bg.softuni.pathfinder.reposityory.CommentRepo;
 import bg.softuni.pathfinder.service.RouteService;
+import io.jenetics.jpx.WayPoint;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -58,6 +61,12 @@ public class RouteController {
     public String routeDetails(@PathVariable("id") Long id, Model model) {
         RouteDTO route = routeService.getRouteById(id);
         model.addAttribute("route", route);
+
+        List<WayPoint> wayPoints = route.getAllPoints();
+        List<double[]> coordinateList = wayPoints.stream()
+            .map(wp -> new double[]{wp.getLatitude().doubleValue(), wp.getLongitude().doubleValue()})
+            .collect(Collectors.toList());
+        model.addAttribute("coordinates", coordinateList);
 
         if (!model.containsAttribute("commentDto")) {
             model.addAttribute("commentDto", new CommentDto());

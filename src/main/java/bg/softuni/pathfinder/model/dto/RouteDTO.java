@@ -16,12 +16,21 @@ public class RouteDTO {
     private String videoUrl;
     private List<PictureEntity> pictures;
     private Double distance;
-    private WayPoint start;
-    private WayPoint end;
+    private List<WayPoint> allPoints;
+    // private WayPoint start;
+    // private WayPoint end;
     private List<CommentEntity> comments;
 
+    // getters & setters
 
-     // getters & setters
+    public List<WayPoint> getAllPoints() {
+        return allPoints;
+    }
+
+    public void setAllPoints(List<WayPoint> allPoints) {
+        this.allPoints = allPoints;
+    }
+
     public List<CommentEntity> getComments() {
         return comments;
     }
@@ -30,23 +39,22 @@ public class RouteDTO {
         this.comments = comments;
     }
 
-    public WayPoint getStart() {
-        return start;
-    }
+    // public WayPoint getStart() {
+    // return start;
+    // }
 
-    public void setStart(WayPoint start) {
-        this.start = start;
-    }
+    // public void setStart(WayPoint start) {
+    // this.start = start;
+    // }
 
-    public WayPoint getEnd() {
-        return end;
-    }
+    // public WayPoint getEnd() {
+    // return end;
+    // }
 
-    public void setEnd(WayPoint end) {
-        this.end = end;
-    }
+    // public void setEnd(WayPoint end) {
+    // this.end = end;
+    // }
 
-   
     public List<PictureEntity> getPictures() {
         return pictures;
     }

@@ -90,7 +90,6 @@ public class ModelMapperConfig {
                 RouteEntity source = context.getSource();
                 RouteDTO destination = new RouteDTO();
 
-                // Това ще се изпълни само когато се вика мапването
                 destination.setId(source.getId());
                 destination.setName(source.getName());
                 destination.setDescription(source.getDescription());
@@ -99,27 +98,38 @@ public class ModelMapperConfig {
                 destination.setAuthor(source.getAuthor() != null ? source.getAuthor().getUsername() : null);
                 destination.setVideoUrl(source.getVideoUrl());
                 destination.setComments(source.getComments());
-                
+
                 if (source.getGpxCoordinates().startsWith("src")) {
                     System.out.println("source.getGpxCoordinates(): " + source.getGpxCoordinates());
                     destination.setDistance(gpxUtil.calculateDistanceFromFile(source.getGpxCoordinates()));
+                    try {
+                        destination.setAllPoints(gpxUtil.getPointsFromFile(source.getGpxCoordinates()));
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
 
-                    
-                }else{
+                } else {
                     destination.setDistance(gpxUtil.calculateDistance(source.getGpxCoordinates()));
+                    try {
+                        destination.setAllPoints(gpxUtil.getPoints(source.getGpxCoordinates()));
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
 
-                try {
-                    WayPoint startPoint = gpxUtil.getStartWayPoint(source.getGpxCoordinates());
-                    destination.setStart(startPoint);
+                // try {
+                // WayPoint startPoint = gpxUtil.getStartWayPoint(source.getGpxCoordinates());
+                // destination.setStart(startPoint);
 
-                    WayPoint endPoint = gpxUtil.getEndWayPoint(source.getGpxCoordinates());
-                    destination.setEnd(endPoint);
-                } catch (IOException e) {
-                    System.err.println("Error reading GPX file: " + source.getGpxCoordinates());
-                }
+                // WayPoint endPoint = gpxUtil.getEndWayPoint(source.getGpxCoordinates());
+                // destination.setEnd(endPoint);
+                // } catch (IOException e) {
+                // System.err.println("Error reading GPX file: " + source.getGpxCoordinates());
+                // }
 
-                return destination; 
+                return destination;
             }
         };
 
@@ -148,7 +158,6 @@ public class ModelMapperConfig {
 
         modelMapper.addConverter(uploadPictureConverter);
 
-       
         Converter<CommentDto, CommentEntity> postCommentConverter = new Converter<CommentDto, CommentEntity>() {
             @Override
             public CommentEntity convert(MappingContext<CommentDto, CommentEntity> context) {
@@ -181,13 +190,13 @@ public class ModelMapperConfig {
                     throw new RuntimeException("User must be logged in to create a route");
                 }
                 destination.setAuthor(userRepo.findByUsername(currentUser.getUsername()).orElseThrow());
-                
+
                 // Convert CategoryEnum values to CategoryEntities
                 if (source.getCategories() != null) {
                     List<CategoryEntities> categories = source.getCategories().stream()
-                        .map(categoryEnum -> categoryRepo.findByName(categoryEnum)
-                            .orElseThrow(() -> new RuntimeException("Category not found: " + categoryEnum)))
-                        .collect(Collectors.toList());
+                            .map(categoryEnum -> categoryRepo.findByName(categoryEnum)
+                                    .orElseThrow(() -> new RuntimeException("Category not found: " + categoryEnum)))
+                            .collect(Collectors.toList());
                     destination.setCategories(categories);
                 }
 
@@ -196,7 +205,6 @@ public class ModelMapperConfig {
         };
 
         modelMapper.addConverter(routeBindingToEntityConverter);
-
 
         return modelMapper;
     }

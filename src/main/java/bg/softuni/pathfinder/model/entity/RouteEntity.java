@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 @Entity
 @Table(name = "routes")
 public class RouteEntity extends BaseEntity {

@@ -70,14 +70,8 @@
                 </div>
             </section>
             <section id="map">
-                <iframe th:if="${route.start != null and route.end != null}"
-                    th:src="'https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d1234!2d' + ${route.start.longitude} + '!3d' + ${route.start.latitude} + '!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!4e0!4m3!3m2!1d' + ${route.start.latitude} + '!2d' + ${route.start.longitude} + '!4m3!3m2!1d' + ${route.end.latitude} + '!2d' + ${route.end.longitude} + '!5e0!3m2!1sen!2sbg!4v1234567890'"
-                    frameborder="0" allowfullscreen>
-                </iframe>
-                <div th:unless="${route.start != null and route.end != null}" class="alert alert-warning">
-                    Map coordinates are not available for this route.
-                </div>
-            </section>  
+                <div id="leaflet-map"></div>
+            </section>
             <section id="video">
                 <iframe id="frame" th:src="'https://www.youtube.com/embed/' + ${route.videoUrl}" width="560"
                     height="315" frameborder="0" allowfullscreen>
@@ -142,6 +136,29 @@
             </div>
         </div>
     </footer>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var routeCoordinates = /*[[${coordinates}]]*/ [];
+        if (routeCoordinates.length > 0) {
+            var map = L.map('leaflet-map').setView(routeCoordinates[0], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            var polyline = L.polyline(routeCoordinates, {color: 'red'}).addTo(map);
+            map.fitBounds(polyline.getBounds());
+
+            // По желание: маркери за начало и край
+            L.marker(routeCoordinates[0]).addTo(map).bindPopup('Start').openPopup();
+            L.marker(routeCoordinates[routeCoordinates.length - 1]).addTo(map).bindPopup('End');
+        } else {
+            document.getElementById('leaflet-map').innerHTML = "No coordinates available for this route.";
+        }
+        /*]]>*/
+    </script>
 </body>
 
 </html>

@@ -272,10 +272,11 @@ footer {
     padding: 2rem;
 }
 
-#map iframe{
+#leaflet-map {
     height: 500px;
     width: 100%;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 #video iframe {
